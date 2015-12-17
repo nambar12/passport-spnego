@@ -5,8 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <gssglue/gssapi/gssapi.h>
-/*#include <gssapi/gssapi_ext.h>*/
+#include <gssapi/gssapi.h>
 #include "gss-misc.h"
 
 #include <stdlib.h>

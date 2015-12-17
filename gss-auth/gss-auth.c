@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gssglue/gssapi/gssapi.h>
+#include <gssapi/gssapi.h>
 #include "gss-misc.h"
 #include "base64.h"
 
