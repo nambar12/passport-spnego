@@ -5,9 +5,67 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gssapi/gssapi.h>
+#include <getopt.h>
 #include "gss-misc.h"
 #include "base64.h"
 
+
+/* global options */
+static int verbose;
+static char* spn;
+static char* keytab;
+static char* client_token;
+
+static struct option long_options[] = {
+    {"verbose", no_argument,       &verbose, 1  },
+    {"spn",     required_argument, 0,        's'},
+    {"keytab",  required_argument, 0,        'k'},
+    {"token",   required_argument, 0,        't'},
+    {0, 0, 0, 0}
+};
+
+void get_options(int argc, char** argv) {
+    int c;
+	int option_index = 0;
+    while(1) {
+	  c = getopt_long (argc, argv, "s:t:", long_options, &option_index);
+	  if (c == -1)
+        break;
+	  
+	  switch(c) {
+		case 0:
+		  if (long_options[option_index].flag != 0)
+			  break;
+		case 's':
+		  spn = optarg;
+			break;
+		case 'k':
+		  keytab = optarg;
+			break;
+		case 't':
+		  client_token = optarg;
+			break;
+		case '?':
+		  break;
+
+		default:
+          abort ();
+	  }
+	}
+
+	if(!spn) {
+	  fprintf(stderr,"spn was not specified\n");
+	  exit(1);
+	}
+	if(!client_token) {
+	  fprintf(stderr,"token was not specified\n");
+	  exit(1);
+	}
+	if(!keytab) {
+	  fprintf(stderr,"keytab was not specified\n");
+	  exit(1);
+	}
+}
 
 int acquire_creds(service_name, server_creds)
      char *service_name;
@@ -63,10 +121,11 @@ int check_token(gss_buffer_t token, gss_cred_id_t server_creds, gss_ctx_id_t *co
   (void) gss_release_buffer(&min_stat, token);
 
   if (result_tok.length != 0) {
+	if(verbose) {
       printf("accept_sec_context token (size=%d):\n", result_tok.length);
       print_token(&result_tok);
-
-      (void) gss_release_buffer(&min_stat, &result_tok);
+	}
+    (void) gss_release_buffer(&min_stat, &result_tok);
   }
   if (maj_stat!=GSS_S_COMPLETE && maj_stat!=GSS_S_CONTINUE_NEEDED) {
       display_status("accepting context", maj_stat, acc_sec_min_stat);
@@ -76,39 +135,33 @@ int check_token(gss_buffer_t token, gss_cred_id_t server_creds, gss_ctx_id_t *co
   }
   
   maj_stat = gss_display_name (&min_stat, client, &client_name, NULL);
-  if (maj_stat!=GSS_S_COMPLETE)
-    printf("ERROR CLIENT\n");
+  if (maj_stat != GSS_S_COMPLETE)
+    fprintf(stderr, "ERROR CLIENT\n");
   
-  printf("client name is: %.*s.\n", (int) client_name.length, (char *) client_name.value);
-  /*print_token(&client_name);*/
+  printf("%.*s.\n", (int) client_name.length, (char *) client_name.value);
 
   if (maj_stat == GSS_S_CONTINUE_NEEDED)
       fprintf(stderr, "continue needed...\n");
-  else
-      fprintf(stderr, "\n");
-
 }
 
 
 int main(int argc, char **argv) {
 
-  if(argc != 2) {
-    fprintf(stderr, "Usage: %s <token>\n", argv[0]);
-    exit -1;
-  }
+  get_options(argc, argv);
+  setenv("KRB5_KTNAME", keytab, 1);
   
   const char *base64token = argv[1];
   
   gss_buffer_desc token;
-  token.value = base64_decode(base64token, strlen(base64token), &token.length);
-  printf("decoded token size is %i\n",token.length);
+  token.value = base64_decode(client_token, strlen(client_token), &token.length);
+  if(verbose) {
+	fprintf(stderr, "decoded token size is %i\n",token.length);
+  }
   
   gss_cred_id_t server_creds;
   display_file = stdout;
 
-  char *service_name = "HTTP\\/itstl220.iil.intel.com\\@GER.CORP.INTEL.COM";
-
-  if (acquire_creds(service_name, &server_creds) < 0)
+  if (acquire_creds(spn, &server_creds) < 0)
     return -1;
 
   gss_ctx_id_t context;
