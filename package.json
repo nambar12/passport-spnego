@@ -1,0 +1,25 @@
+{
+  "name": "passport-spnego",
+  "version": "1.0.0",
+  "description": "passport authentication strategy using Kerberos authentication with keytab",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nambar12/passport-spnego"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "passport",
+    "kerberos"
+  ],
+  "author": "Noam Ambar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nambar12/passport-spnego/issues"
+  },
+  "homepage": "https://github.com/nambar12/passport-spnego"
+}
