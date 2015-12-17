@@ -1,4 +1,4 @@
-PRODUCT = gss-auth
+PRODUCT = ../bin/gss-auth
 C_SOURCES = gss-auth.c gss-misc.c base64.c
 
 #INCLUDES = -I$(PWD)/krb5/usr/local/include
