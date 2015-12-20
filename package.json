@@ -21,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/nambar12/passport-spnego/issues"
   },
-  "homepage": "https://github.com/nambar12/passport-spnego"
+  "homepage": "https://github.com/nambar12/passport-spnego",
+  "readme": "README.md",
+  "dependencies": {
+    "express": "^4.13.3",
+    "kerberos": "0.0.17",
+    "node": "0.0.0",
+    "passport": "^0.3.2",
+    "passport-strategy": "^1.0.0"
+  }
 }
