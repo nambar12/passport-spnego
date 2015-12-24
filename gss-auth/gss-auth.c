@@ -139,9 +139,10 @@ int check_token(gss_buffer_t token, gss_cred_id_t server_creds, gss_ctx_id_t *co
     fprintf(stderr, "ERROR CLIENT\n");
   
   printf("%.*s.\n", (int) client_name.length, (char *) client_name.value);
+  return 0;
 
-  if (maj_stat == GSS_S_CONTINUE_NEEDED)
-      fprintf(stderr, "continue needed...\n");
+  /*if (maj_stat == GSS_S_CONTINUE_NEEDED)
+      fprintf(stderr, "continue needed...\n");*/
 }
 
 
@@ -168,4 +169,5 @@ int main(int argc, char **argv) {
   int ret_flags;
   if (check_token(&token, server_creds, &context, &ret_flags) < 0)
     return -1;
+  exit(0);
 }

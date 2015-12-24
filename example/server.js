@@ -16,8 +16,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new KerberosStrategy({
-        spn: 'SPN',
-        keytab: 'KEYTAB'
+        spn: 'sys_nbflow',
+        keytab: '/nfs/iil/home/nambar/work/tmp/nbflow.keytab3'
     }
 ));
 
@@ -31,9 +31,9 @@ passport.deserializeUser(function(user, done) {
 
 app.get('/', passport.authenticate('kerberos', {}),
     function (req, res) {
-        res.send('This is the main page! (user is ' + req.user + ')');
+        res.send('<H1>Welcome to NodeJS Kerberos authentication module!</H1><H3>I bet that you\'re <span style="color:red">' + req.user + '</span></H3>');
     });
 
 
-console.log('listening on port 3000');
-app.listen(3000);
+console.log('listening on port 3001');
+app.listen(3001);
