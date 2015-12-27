@@ -34,6 +34,8 @@ app.get('/', passport.authenticate('kerberos', {}),
         res.send('<H1>Welcome to NodeJS Kerberos authentication module!</H1><H3>I bet that you\'re <span style="color:red">' + req.user + '</span></H3>');
     });
 
+var server = app.listen(3002, function () {
+    var port = server.address().port;
 
-console.log('listening on port 3001');
-app.listen(3001);
+    console.log('Example server listening at port %s', port);
+});

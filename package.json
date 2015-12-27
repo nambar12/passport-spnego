@@ -33,6 +33,7 @@
     "winston": "^2.1.1"
   },
   "scripts" : {
-    "postinstall" : "cd gss-auth ; make"
-  }
+    "postinstall" : "cd gss-auth; make"
+  },
+  "os" : ["linux", "!win32"]
 }
