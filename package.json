@@ -31,5 +31,8 @@
     "passport": "^0.3.2",
     "passport-strategy": "^1.0.0",
     "winston": "^2.1.1"
+  },
+  "scripts" : {
+    "postinstall" : "cd gss-auth ; make"
   }
 }
