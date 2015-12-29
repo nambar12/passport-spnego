@@ -35,5 +35,5 @@
   "scripts" : {
     "postinstall" : "cd gss-auth || cd ./node_modules/passport-snpego/gss-auth; make"
   },
-  "os" : ["linux", "!win32"]
+  "os" : ["linux", "!win32", "!win64"]
 }
