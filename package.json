@@ -33,7 +33,7 @@
     "winston": "^2.1.1"
   },
   "scripts" : {
-    "postinstall" : "cd gss-auth || cd ./node_modules/passport-snpego/gss-auth; make"
+    "postinstall" : "cd gss-auth || cd ./node_modules/passport-spnego/gss-auth; make"
   },
   "os" : ["linux", "!win32", "!win64"]
 }
