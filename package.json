@@ -1,6 +1,6 @@
 {
   "name": "passport-spnego",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "passport authentication strategy using Kerberos authentication with keytab",
   "main": "index.js",
   "scripts": {
