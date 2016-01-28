@@ -2,7 +2,7 @@
   "name": "passport-spnego",
   "version": "1.0.1",
   "description": "passport authentication strategy using Kerberos authentication with keytab",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
