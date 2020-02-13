@@ -165,7 +165,7 @@ int main(int argc, char **argv) {
   if (acquire_creds(spn, &server_creds) < 0)
     return -1;
 
-  gss_ctx_id_t context;
+  gss_ctx_id_t context = GSS_C_NO_CONTEXT;
   int ret_flags;
   if (check_token(&token, server_creds, &context, &ret_flags) < 0)
     return -1;
